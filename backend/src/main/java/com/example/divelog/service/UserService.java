@@ -4,6 +4,7 @@ import com.example.divelog.Repository.UserRepository;
 import com.example.divelog.model.Role;
 import com.example.divelog.model.User;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -31,6 +33,7 @@ public class UserService {
         validate(user);
         userRepository.save(user.toBuilder()
                 .role(Role.USER)
+                .password(passwordEncoder.encode(user.getPassword()))
                 .build());
     }
 
