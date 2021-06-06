@@ -1,12 +1,36 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { useState } from 'react';
-import TimeLine from './TimeLine';
-import Login from './Login';
+import api from './api';
 
-const Nav = () => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+export const userLogin = async (value) => {
+  try {
+    const response = await api.post('/login', value);
+    handleResponse(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  return (
+const handleResponse = (response) => {
+  localStorage.setItem('token', response.data.token);
+};
+
+export const getDives = async (userId) => {
+  try {
+    const response = await api.get(`/dive/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error();
+  }
+};
+
+export const postDive = async (userId, values) => {
+  try {
+    await api.post(`/dive/${userId}`, values);
+  } catch (error) {
+    console.error();
+  }
+};
+
+/*
     <Router>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -41,7 +65,4 @@ const Nav = () => {
         </Route>
       </Switch>
     </Router>
-  );
-};
-
-export default Nav;
+  );*/

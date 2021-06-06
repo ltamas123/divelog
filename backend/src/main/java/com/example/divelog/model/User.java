@@ -37,7 +37,6 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        log.info("Login started with username: {} ", List.of(role));
         return List.of(role);
     }
 

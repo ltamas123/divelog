@@ -48,8 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new AuthorizationFilter(authenticationManager(), userRepository, hmacKey))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/user").permitAll()
-                //.antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.OPTIONS,"/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                //.antMatchers(HttpMethod.GET, "/api/user").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable();
