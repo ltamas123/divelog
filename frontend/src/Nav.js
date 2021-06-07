@@ -1,10 +1,15 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import TimeLine from './TimeLine';
 import Login from './Login';
-
+import { UserToken, UserId } from './UserToken';
 const Nav = () => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState();
+  const [userId, setUserId] = useState();
+
+  useState(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
 
   return (
     <Router>
@@ -28,18 +33,26 @@ const Nav = () => {
                 <Link to="/">Home</Link>
               </li>
               <li class="nav-item">
-                <Link to="/login">Login</Link>
+                <Link to="/login">{token ? 'Logout' : 'Login'}</Link>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-      <Switch>
-        <Route path="/">{token ? <TimeLine /> : <Login />}</Route>
-        <Route path="/timeline">
-          <TimeLine />
-        </Route>
-      </Switch>
+      <UserToken.Provider value={{ token, setToken }}>
+        <Switch>
+          <Route path="/timeline">
+            <TimeLine />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route exact path="/">
+            {token ? <TimeLine /> : <Login />}
+          </Route>
+        </Switch>
+      </UserToken.Provider>
     </Router>
   );
 };

@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react';
-import { getDives, handleDives } from './apiCalls';
+import { useEffect, useState, useContext } from 'react';
+import { getDives, getUserId } from './apiCalls';
 import SendDives from './SendDives';
+import { UserToken } from './UserToken';
 
 const TimeLine = () => {
   const [dives, setDives] = useState([]);
-  const [stats, setStats] = useState();
+
+  const { token, setToken } = useContext(UserToken);
 
   const conect = async () => {
-    const divess = await getDives('a5ab2b1c-dc0b-4431-84a4-46dfe2af755c');
+    const divess = await getDives('fsd');
 
     setDives(divess);
-    console.log(dives);
   };
 
   useEffect(() => {
+    setToken(localStorage.getItem('token'));
     conect();
   }, []);
 

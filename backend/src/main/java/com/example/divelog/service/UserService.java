@@ -3,7 +3,11 @@ package com.example.divelog.service;
 import com.example.divelog.Repository.UserRepository;
 import com.example.divelog.model.Role;
 import com.example.divelog.model.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +22,11 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
+    private static final String BEARER_PREFIX = "Bearer ";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Value("${app.jwtHmac}")
+    private String hmacKey;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -55,5 +62,16 @@ public class UserService {
         if(!StringUtils.hasText(user.getFullName())){
             throw new ValidationException("Missing name");
         }
+    }
+
+    public String getUserId(String s) {
+        String authValue = s.replaceAll(BEARER_PREFIX, org.apache.commons.lang3.StringUtils.EMPTY);
+        Claims body = Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(hmacKey.getBytes()))
+                .build()
+                .parseClaimsJws(authValue)
+                .getBody();
+        return userRepository.findFirstByEmail(body.getSubject()).get().getId();
+
     }
 }

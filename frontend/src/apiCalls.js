@@ -1,16 +1,27 @@
 import api from './api';
 
-export const userLogin = async (value) => {
+export const userLogin = async (value, { token, setToken }) => {
   try {
     const response = await api.post('/login', value);
-    handleResponse(response);
+    handleResponse(response, { token, setToken });
   } catch (error) {
     console.log(error);
   }
 };
 
-const handleResponse = (response) => {
+const handleResponse = (response, { token, setToken }) => {
   localStorage.setItem('token', response.data.token);
+  setToken(localStorage.getItem('token'));
+};
+
+export const getUserId = async ({ userId, setUserId }) => {
+  try {
+    const response = await api.get(`/user/1/`);
+    setUserId(response.data);
+    console.log(response);
+  } catch (error) {
+    console.error();
+  }
 };
 
 export const getDives = async (userId) => {
