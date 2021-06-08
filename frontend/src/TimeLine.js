@@ -9,7 +9,7 @@ const TimeLine = () => {
   const { token, setToken } = useContext(UserToken);
 
   const conect = async () => {
-    const divess = await getDives('fsd');
+    const divess = await getDives('userId'); //TODO getUserId from backend
 
     setDives(divess);
   };

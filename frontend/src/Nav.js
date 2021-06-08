@@ -5,7 +5,7 @@ import Login from './Login';
 import { UserToken, UserId } from './UserToken';
 const Nav = () => {
   const [token, setToken] = useState();
-  const [userId, setUserId] = useState();
+  //const [userId, setUserId] = useState();
 
   useState(() => {
     setToken(localStorage.getItem('token'));

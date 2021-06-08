@@ -22,9 +22,7 @@ const Login = () => {
       username: email,
       password: pass,
     };
-
     await userLogin(value, { token, setToken });
-
     history.push('/timeline');
   };
 
