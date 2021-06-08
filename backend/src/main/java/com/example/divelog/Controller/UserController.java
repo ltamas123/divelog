@@ -2,10 +2,9 @@ package com.example.divelog.Controller;
 
 import com.example.divelog.model.User;
 import com.example.divelog.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +15,19 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
 
     @GetMapping
     public List<User> findAll(){
         return userService.findAll();
+    }
+
+    @GetMapping("/1")
+    public String getUserId(@RequestHeader (name="Authorization") String s){
+        return userService.getUserId(s);
+
     }
 
     @GetMapping("/{id}")

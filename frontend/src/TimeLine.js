@@ -1,41 +1,30 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { getDives, getUserId } from './apiCalls';
+import SendDives from './SendDives';
+import { UserToken } from './UserToken';
 
 const TimeLine = () => {
   const [dives, setDives] = useState([]);
-  const [stats, setStats] = useState();
 
-  async function getUserDives() {
-    try {
-      const response = await axios.get(
-        'http://localhost:8000/api/dive/ea93d0db-9c15-4e5a-b175-3aa32668c604/'
-      );
-      console.log(response);
-      setDives(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  async function getStats() {
-    try {
-      const response = await axios.get(
-        'http://localhost:8000/api/dive/ea93d0db-9c15-4e5a-b175-3aa32668c604/stats'
-      );
-      console.log(response);
-      setStats(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const { token, setToken } = useContext(UserToken);
+
+  const conect = async () => {
+    const divess = await getDives('userId'); //TODO getUserId from backend
+
+    setDives(divess);
+  };
 
   useEffect(() => {
-    getUserDives();
-    getStats();
+    setToken(localStorage.getItem('token'));
+    conect();
   }, []);
+
   return (
     <div class="container ">
       <div class="row justify-content-between ">
-        <div class="col">Column</div>
+        <div class="col">
+          <SendDives />
+        </div>
         <div class="col">
           {dives
             ? dives.map((dive) => (
@@ -66,13 +55,13 @@ const TimeLine = () => {
               ))
             : 'loading'}
         </div>
-        {stats ? (
+        {dives ? (
           <div class="col">
             <div class="card text-white bg-secondary mb-3">
               <div class="card-body">Stats</div>
-              <div class="card-body">Number of dives: {stats.Count}</div>
-              <div class="card-body">Max depth: {stats.maxDepth}</div>
-              <div class="card-body">Longest Dive: {stats.maxTime}</div>
+              <div class="card-body">Number of dives: {}</div>
+              <div class="card-body">Max depth: {}</div>
+              <div class="card-body">Longest Dive: {}</div>
             </div>
           </div>
         ) : (
