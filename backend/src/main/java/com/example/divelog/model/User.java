@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public String getUsername() {
-        return this.email;
+        return this.id;
     }
 
     @JsonIgnore

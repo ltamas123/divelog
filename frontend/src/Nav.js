@@ -1,23 +1,25 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import TimeLine from './TimeLine';
 import Login from './Login';
-import { UserToken, UserId } from './UserToken';
+import { UserToken } from './UserToken';
+import { Logout } from './Logout';
 const Nav = () => {
   const [token, setToken] = useState();
-  //const [userId, setUserId] = useState();
 
-  useState(() => {
+  useEffect(() => {
     setToken(localStorage.getItem('token'));
   }, []);
 
+  const isUserLogdIn = token ? <TimeLine /> : <Login />;
+
   return (
     <Router>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand">DiveLog</a>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+          <h5 className="navbar-brand">DiveLog</h5>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -25,15 +27,19 @@ const Nav = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
                 <Link to="/">Home</Link>
               </li>
-              <li class="nav-item">
-                <Link to="/login">{token ? 'Logout' : 'Login'}</Link>
+              <li className="nav-item">
+                {token ? (
+                  <Link to="/logout"> Logout</Link>
+                ) : (
+                  <Link to="/login"> Login</Link>
+                )}
               </li>
             </ul>
           </div>
@@ -41,15 +47,12 @@ const Nav = () => {
       </nav>
       <UserToken.Provider value={{ token, setToken }}>
         <Switch>
-          <Route path="/timeline">
-            <TimeLine />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-
+          <Route path="/timeline">{isUserLogdIn}</Route>
+          <Route path="/login">{isUserLogdIn}</Route>
+          <Route path="/logout">{token ? <Logout /> : <Login />}</Route> TODO
+          valamit kitalálni rá hogy logout után ne maradjon a logout path-on
           <Route exact path="/">
-            {token ? <TimeLine /> : <Login />}
+            {isUserLogdIn}
           </Route>
         </Switch>
       </UserToken.Provider>

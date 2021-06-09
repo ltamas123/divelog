@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Hashtable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,7 +20,9 @@ public class DiveService {
     private final UserService userService;
 
     public List<Dive> getAllDiveForGivenUser(String id) {
-        return diveRepository.getByUserId(id);
+        return diveRepository.getByUserId(id).stream().map(e-> e.toBuilder()
+                .user(null)
+                .build()).collect(Collectors.toList());
     }
 
     public Dive save(Dive dive, String id) {

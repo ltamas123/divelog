@@ -67,7 +67,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         log.info("Jwt's content is: {}", body);
         String username = body.getSubject();
 
-        userRepository.findFirstByEmail(username)
+        userRepository.findById(username)
                 .ifPresent(user ->
                         SecurityContextHolder.getContext().setAuthentication(
                                 new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())

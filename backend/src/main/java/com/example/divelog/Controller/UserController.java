@@ -24,11 +24,11 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("/1")
-    public String getUserId(@RequestHeader (name="Authorization") String s){
-        return userService.getUserId(s);
-
-    }
+//    @GetMapping("/1")
+//    public String getUserId(@RequestHeader (name="Authorization") String s){
+//        return userService.getUserId(s);
+//
+//    }
 
     @GetMapping("/{id}")
     public Optional<User> findOne(@PathVariable String id){
