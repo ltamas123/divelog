@@ -64,14 +64,14 @@ public class UserService {
         }
     }
 
-    public String getUserId(String s) {
-        String authValue = s.replaceAll(BEARER_PREFIX, org.apache.commons.lang3.StringUtils.EMPTY);
-        Claims body = Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(hmacKey.getBytes()))
-                .build()
-                .parseClaimsJws(authValue)
-                .getBody();
-        return userRepository.findFirstByEmail(body.getSubject()).get().getId();
-
-    }
+//    public String getUserId(String s) {
+//        String authValue = s.replaceAll(BEARER_PREFIX, org.apache.commons.lang3.StringUtils.EMPTY);
+//        Claims body = Jwts.parserBuilder()
+//                .setSigningKey(Keys.hmacShaKeyFor(hmacKey.getBytes()))
+//                .build()
+//                .parseClaimsJws(authValue)
+//                .getBody();
+//        return userRepository.findFirstByEmail(body.getSubject()).get().getId();
+//
+//    }
 }

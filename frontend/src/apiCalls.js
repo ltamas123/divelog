@@ -9,22 +9,6 @@ export const userLogin = async (value, { token, setToken }) => {
     console.log(error);
   }
 };
-/*
-const handleResponse = (response, { token, setToken }) => {
-  localStorage.setItem('token', response.data.token);
-  setToken(localStorage.getItem('token'));
-};
-*/
-
-export const getUserId = async ({ userId, setUserId }) => {
-  try {
-    const response = await api.get(`/user/1/`);
-    setUserId(response.data);
-    console.log(response);
-  } catch (error) {
-    console.error();
-  }
-};
 
 export const getDives = async (userId) => {
   try {
@@ -35,7 +19,7 @@ export const getDives = async (userId) => {
   }
 };
 
-export const postDive = async (userId, values) => {
+export const postDive = async (values, userId) => {
   try {
     await api.post(`/dive/${userId}`, values);
   } catch (error) {

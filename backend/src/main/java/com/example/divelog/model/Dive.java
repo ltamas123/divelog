@@ -1,9 +1,7 @@
 package com.example.divelog.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,6 +22,7 @@ public class Dive {
     private String longitude;
     private double depth;
     private double duration;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne
     private User user;
 

@@ -1,7 +1,11 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { postDive } from './apiCalls';
-const SendDives = () => {
+import useDecode from './useDecode';
+
+const SendDives = ({ setDives, dives }) => {
+  const { getUserId } = useDecode();
+
   const formik = useFormik({
     initialValues: {
       latitude: '',
@@ -11,8 +15,9 @@ const SendDives = () => {
     },
 
     onSubmit: (values) => {
-      //alert(JSON.stringify(values, null, 2));
-      postDive('a5ab2b1c-dc0b-4431-84a4-46dfe2af755c', values);
+      postDive(values, getUserId());
+
+      setDives([...dives, { values }]); //TODO nem működik
     },
   });
   return (
