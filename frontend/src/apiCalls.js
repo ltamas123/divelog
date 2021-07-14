@@ -26,3 +26,12 @@ export const postDive = async (values, userId) => {
     console.error();
   }
 };
+
+export const getStats = async (userId) => {
+  try {
+    const response = await api.get(`/dive/${userId}/stats`);
+    return response.data;
+  } catch (error) {
+    console.error();
+  }
+};

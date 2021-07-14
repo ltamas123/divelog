@@ -8,10 +8,10 @@ const SendDives = ({ setDives, dives }) => {
 
   const postNewDive = async (values) => {
     await postDive(values, getUserId());
-    const newDiveList = await getDives(getUserId()); //TODO nem működik
+    const newDiveList = await getDives(getUserId());
     setDives(newDiveList);
-    console.log(dives);
   };
+
   const formik = useFormik({
     initialValues: {
       latitude: '',
@@ -22,7 +22,6 @@ const SendDives = ({ setDives, dives }) => {
 
     onSubmit: (values) => {
       postNewDive(values);
-      console.log(dives);
     },
   });
   return (
