@@ -1,11 +1,17 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { postDive } from './apiCalls';
+import { postDive, getDives } from './apiCalls';
 import useDecode from './useDecode';
 
 const SendDives = ({ setDives, dives }) => {
   const { getUserId } = useDecode();
 
+  const postNewDive = async (values) => {
+    await postDive(values, getUserId());
+    const newDiveList = await getDives(getUserId()); //TODO nem működik
+    setDives(newDiveList);
+    console.log(dives);
+  };
   const formik = useFormik({
     initialValues: {
       latitude: '',
@@ -15,9 +21,8 @@ const SendDives = ({ setDives, dives }) => {
     },
 
     onSubmit: (values) => {
-      postDive(values, getUserId());
-
-      setDives([...dives, { values }]); //TODO nem működik
+      postNewDive(values);
+      console.log(dives);
     },
   });
   return (
