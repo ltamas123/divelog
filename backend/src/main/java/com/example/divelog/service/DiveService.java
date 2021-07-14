@@ -44,8 +44,8 @@ public class DiveService {
         List<Dive> allDivsForUser = diveRepository.getByUserId(id);
         Hashtable<String, String> stats = new Hashtable<>();
         stats.put("count", String.valueOf((long) allDivsForUser.size()));
-        stats.put("maxDepth", String.valueOf(allDivsForUser.stream().map(Dive::getDepth).max(Double::compareTo)));
-        stats.put("maxTime", String.valueOf(allDivsForUser.stream().map(Dive::getDuration).max(Double::compareTo)));
+        stats.put("maxDepth", String.valueOf(allDivsForUser.stream().map(Dive::getDepth).max(Double::compareTo).orElse((double) 0)));
+        stats.put("maxTime", String.valueOf(allDivsForUser.stream().map(Dive::getDuration).max(Double::compareTo).orElse((double) 0)));
 
         return stats;
     }

@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { getDives } from './apiCalls';
+import { getDives, getStats } from './apiCalls';
 import SendDives from './SendDives';
 import useDecode from './useDecode';
 const TimeLine = () => {
   const [dives, setDives] = useState([]);
+  const [stats, setStats] = useState();
   const { getUserId } = useDecode();
 
   const conect = async () => {
     const divess = await getDives(getUserId());
-
+    const stat = await getStats(getUserId());
+    setStats(stat);
     setDives(divess);
+    console.log(stats);
     console.log(divess);
   };
 
@@ -51,13 +54,13 @@ const TimeLine = () => {
               ))
             : 'loading'}
         </div>
-        {dives ? (
+        {stats ? (
           <div className="col">
             <div className="card text-white bg-secondary mb-3">
               <div className="card-body">Stats</div>
-              <div className="card-body">Number of dives: {}</div>
-              <div className="card-body">Max depth: {}</div>
-              <div className="card-body">Longest Dive: {}</div>
+              <div className="card-body">Number of dives: {stats.count}</div>
+              <div className="card-body">Max depth: {stats.maxDepth}</div>
+              <div className="card-body">Longest Dive: {stats.maxTime}</div>
             </div>
           </div>
         ) : (
