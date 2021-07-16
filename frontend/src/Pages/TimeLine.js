@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getDives, getStats } from './apiCalls';
-import SendDives from './SendDives';
-import useDecode from './useDecode';
+import { getDives, getStats } from '../api/apiCalls';
+import SendDives from '../Components/SendDives';
+import useDecode from '../Hooks/useDecode';
+import DivesList from '../Components/DivesList';
 const TimeLine = () => {
   const [dives, setDives] = useState([]);
   const [stats, setStats] = useState();
@@ -27,32 +28,7 @@ const TimeLine = () => {
           <SendDives setDives={setDives} dives={dives} />
         </div>
         <div className="col">
-          {dives
-            ? dives.map((dive) => (
-                <div
-                  className="card text-white bg-secondary mb-3"
-                  style={{ maxwidth: 500 }}
-                  key={dive.id}
-                >
-                  <img
-                    src="https://rajaampatbiodiversity.com/wp-content/uploads/2021/01/raja-ampat-diving-3.jpg"
-                    className="card-img-top"
-                    alt="..."
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{}</h5>
-                  </div>
-                  <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                      00 : {dive.duration} : 00
-                    </li>
-                    <li className="list-group-item">{dive.depth} m</li>
-                    <li className="list-group-item">Type: {dive.type}</li>
-                  </ul>
-                  <div className="card-body">More Info</div>
-                </div>
-              ))
-            : 'loading'}
+          {dives ? <DivesList dives={dives} /> : 'loading'}
         </div>
         {stats ? (
           <div className="col">

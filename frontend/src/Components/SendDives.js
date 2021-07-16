@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { postDive, getDives } from './apiCalls';
-import useDecode from './useDecode';
+import { postDive, getDives } from '../api/apiCalls';
+import useDecode from '../Hooks/useDecode';
 
 const SendDives = ({ setDives, dives }) => {
   const { getUserId } = useDecode();
