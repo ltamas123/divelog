@@ -4,8 +4,11 @@ import TimeLine from './TimeLine';
 import Login from './Login';
 import { UserToken } from './UserToken';
 import { Logout } from './Logout';
+import useDecode from './useDecode';
+import ProfilePage from './ProfilePage';
 const Nav = () => {
   const [token, setToken] = useState();
+  const { getUserId } = useDecode();
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));
@@ -41,12 +44,20 @@ const Nav = () => {
                   <Link to="/login"> Login</Link>
                 )}
               </li>
+              {token && (
+                <li className="nav-item">
+                  <Link to={`/${getUserId()}`}>Profile</Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
       </nav>
       <UserToken.Provider value={{ token, setToken }}>
         <Switch>
+          <Route path={`/${getUserId()}`}>
+            <ProfilePage />
+          </Route>
           <Route path="/timeline">{isUserLogdIn}</Route>
           <Route path="/login">{isUserLogdIn}</Route>
           <Route path="/logout">{token ? <Logout /> : <Login />}</Route> TODO
