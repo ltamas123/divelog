@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserToken } from './UserToken';
+import { UserToken } from '../UserToken';
 
 export const Logout = () => {
   const { token, setToken } = useContext(UserToken);

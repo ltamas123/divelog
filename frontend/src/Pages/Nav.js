@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TimeLine from './TimeLine';
 import Login from './Login';
-import { UserToken } from './UserToken';
+import { UserToken } from '../UserToken';
 import { Logout } from './Logout';
-import useDecode from './useDecode';
+import useDecode from '../Hooks/useDecode';
 import ProfilePage from './ProfilePage';
 const Nav = () => {
   const [token, setToken] = useState();
@@ -38,6 +38,9 @@ const Nav = () => {
                 <Link to="/">Home</Link>
               </li>
               <li className="nav-item">
+                <Link to="/timeline">TimeLine</Link>
+              </li>
+              <li className="nav-item">
                 {token ? (
                   <Link to="/logout"> Logout</Link>
                 ) : (
@@ -46,7 +49,7 @@ const Nav = () => {
               </li>
               {token && (
                 <li className="nav-item">
-                  <Link to={`/${getUserId()}`}>Profile</Link>
+                  <Link to={`/user/${getUserId()}`}>Profile</Link>
                 </li>
               )}
             </ul>
@@ -55,7 +58,7 @@ const Nav = () => {
       </nav>
       <UserToken.Provider value={{ token, setToken }}>
         <Switch>
-          <Route path={`/${getUserId()}`}>
+          <Route path={`/user/`}>
             <ProfilePage />
           </Route>
           <Route path="/timeline">{isUserLogdIn}</Route>

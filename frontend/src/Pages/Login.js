@@ -1,6 +1,6 @@
-import { userLogin } from './apiCalls';
+import { userLogin } from '../api/apiCalls';
 import { useContext, useState } from 'react';
-import { UserToken } from './UserToken';
+import { UserToken } from '../UserToken';
 
 const Login = () => {
   const [email, setEmail] = useState('');
