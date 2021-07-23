@@ -45,4 +45,10 @@ public class UserController {
     public User update(@RequestBody User user, @PathVariable String id){
         return userService.update(user, id);
     }
+
+    @PutMapping("/follow/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void follow(@PathVariable String id, @RequestParam(name = "id") String followedUserId){
+        userService.follow(id, followedUserId);
+    }
 }

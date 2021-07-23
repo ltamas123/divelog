@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TimeLine from './TimeLine';
 import Login from './Login';
-import { UserToken } from '../UserToken';
+import { UserToken } from '../Hooks/UserToken';
 import { Logout } from './Logout';
 import useDecode from '../Hooks/useDecode';
 import ProfilePage from './ProfilePage';
