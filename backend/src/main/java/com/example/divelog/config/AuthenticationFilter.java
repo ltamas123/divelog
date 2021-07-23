@@ -46,7 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throws AuthenticationException {
         ObjectMapper objectMapper = new ObjectMapper();
         LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
-        log.info("Login started with username: {} {}", loginRequest.getUsername() , loginRequest.getPassword());
+        log.info("Login started with username: {} ", loginRequest.getUsername() );
 
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(

@@ -9,7 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 @Slf4j
 @Data
@@ -32,19 +34,19 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    private HashSet<String> followedUsers;
 
 
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        log.info("Login started with username: {} ", List.of(role));
         return List.of(role);
     }
 
     @JsonIgnore
     @Override
     public String getUsername() {
-        return this.email;
+        return this.id;
     }
 
     @JsonIgnore

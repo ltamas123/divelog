@@ -1,5 +1,6 @@
 package com.example.divelog.Controller;
 
+import com.example.divelog.dto.TimeLineDTO;
 import com.example.divelog.model.Dive;
 import com.example.divelog.service.DiveService;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +42,10 @@ public class DiveController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id){
         diveService.delete(id);
+    }
+
+    @GetMapping("/timeline/{id}")
+    public List<TimeLineDTO> getAllDiveForTimeLine(@PathVariable String id){
+        return diveService.getAllDiveForTimeLine(id);
     }
 }
