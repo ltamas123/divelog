@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Set;
+
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,7 +29,7 @@ public class DiveService {
     private final UserService userService;
 
     public List<Dive> getAllDiveForGivenUser(String id) {
-        return diveRepository.getByUserId(id).stream().map(e -> e.toBuilder()
+        return diveRepository.getByUserId(id).stream().map(e-> e.toBuilder()
                 .user(null)
                 .build()).collect(Collectors.toList());
     }
@@ -59,6 +59,7 @@ public class DiveService {
         return stats;
     }
 
+
     public List<TimeLineDTO> getAllDiveForTimeLine(String id) {
         HashSet<String> followedUserIdList = userRepository.findById(id).orElseThrow(NullPointerException::new).getFollowedUsers();
         List<Dive> allDiveForTimeLine = followedUserIdList.stream()
@@ -79,4 +80,5 @@ public class DiveService {
                         .build())
                 .build()).collect(Collectors.toList());
     }
+
 }

@@ -46,9 +46,11 @@ public class UserController {
         return userService.update(user, id);
     }
 
+
     @PutMapping("/follow/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void follow(@PathVariable String id, @RequestParam(name = "id") String followedUserId){
         userService.follow(id, followedUserId);
     }
+
 }
