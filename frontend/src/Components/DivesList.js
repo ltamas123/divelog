@@ -11,7 +11,7 @@ const DivesList = ({ dives }) => {
         alt="..."
       />
       <div className="card-body">
-        <h5 className="card-title">{}</h5>
+        <h5 className="card-title">{dive.user ? dive.user.fullName : ''}</h5>
       </div>
       <ul className="list-group list-group-flush">
         <li className="list-group-item">00 : {dive.duration} : 00</li>

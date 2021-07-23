@@ -19,6 +19,15 @@ export const getDives = async (userId) => {
   }
 };
 
+export const getTimeLine = async (userId) => {
+  try {
+    const response = await api.get(`/dive/timeline/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error();
+  }
+};
+
 export const postDive = async (values, userId) => {
   try {
     await api.post(`/dive/${userId}`, values);

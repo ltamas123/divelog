@@ -62,12 +62,12 @@ public class DiveService {
 
     public List<TimeLineDTO> getAllDiveForTimeLine(String id) {
         HashSet<String> followedUserIdList = userRepository.findById(id).orElseThrow(NullPointerException::new).getFollowedUsers();
+        followedUserIdList.add(id);
         List<Dive> allDiveForTimeLine = followedUserIdList.stream()
                 .map(diveRepository::getByUserId)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
-        log.info(String.valueOf(allDiveForTimeLine));
         return allDiveForTimeLine.stream().map(dive -> TimeLineDTO.builder()
                 .id(dive.getId())
                 .depth(dive.getDepth())

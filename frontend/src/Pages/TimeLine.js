@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDives, getStats } from '../api/apiCalls';
+import { getTimeLine, getStats } from '../api/apiCalls';
 import SendDives from '../Components/SendDives';
 import useDecode from '../Hooks/useDecode';
 import DivesList from '../Components/DivesList';
@@ -9,11 +9,10 @@ const TimeLine = () => {
   const { getUserId } = useDecode();
 
   const conect = async () => {
-    const divess = await getDives(getUserId());
+    const divess = await getTimeLine(getUserId());
     const stat = await getStats(getUserId());
     setStats(stat);
     setDives(divess);
-    console.log(stats);
     console.log(divess);
   };
 
