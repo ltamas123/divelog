@@ -3,12 +3,12 @@ import { getTimeLine, getStats } from '../api/apiCalls';
 import SendDives from '../Components/SendDives';
 import useDecode from '../Hooks/useDecode';
 import DivesList from '../Components/DivesList';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+
 import Map from '../Components/Map';
 const TimeLine = () => {
   const [dives, setDives] = useState([]);
   const [stats, setStats] = useState();
+  const [position, setPosition] = useState();
   const { getUserId } = useDecode();
 
   const conect = async () => {
@@ -19,19 +19,22 @@ const TimeLine = () => {
     console.log(divess);
   };
 
+  const onModalClose = (pos) => {
+    console.log(pos);
+    setPosition(pos);
+  };
+
   useEffect(() => {
     conect();
   }, []);
 
   return (
     <>
-      <Popup trigger={<button className="button"> Open Modal </button>} modal>
-        <Map />
-      </Popup>
+      <Map onModalClose={onModalClose} />
       <div className="container ">
         <div className="row justify-content-between ">
           <div className="col">
-            <SendDives setDives={setDives} dives={dives} />
+            <SendDives setDives={setDives} position={position} />
           </div>
           <div className="col">
             {dives ? <DivesList dives={dives} /> : 'loading'}
