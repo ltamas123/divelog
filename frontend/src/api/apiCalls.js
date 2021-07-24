@@ -53,3 +53,11 @@ export const getUser = async (userId) => {
     console.error();
   }
 };
+
+export const followUser = async (userId, followedUserId) => {
+  try {
+    await api.put(`/user/follow/${userId}?id=${followedUserId}`);
+  } catch (error) {
+    console.error();
+  }
+};

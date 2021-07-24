@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.xml.bind.ValidationException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -53,8 +55,16 @@ public class UserService {
 
     public void follow(String id, String followedUserId) {
         User user = userRepository.findById(id).orElseThrow();
-        user.getFollowedUsers().add(followedUserId);
-        userRepository.findById(followedUserId).orElseThrow().getFollowers().add(id);
+        User followedUser = userRepository.findById(followedUserId).orElseThrow();
+        if (user.getFollowedUsers().stream().noneMatch(userid -> userid.equalsIgnoreCase(followedUserId))) {
+            user.getFollowedUsers().add(followedUserId);
+            followedUser.getFollowers().add(id);
+            log.info("following user {} from user {}", followedUserId, id);
+        } else {
+            user.getFollowedUsers().remove(followedUserId);
+            followedUser.getFollowers().remove(id);
+        }
+
     }
 
     @SneakyThrows
