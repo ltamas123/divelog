@@ -38,6 +38,7 @@ public class UserService {
         validate(user);
         userRepository.save(user.toBuilder()
                 .followedUsers(new HashSet<>())
+                .followers(new HashSet<>())
                 .role(Role.USER)
                 .password(passwordEncoder.encode(user.getPassword()))
                 .build());
@@ -53,6 +54,7 @@ public class UserService {
     public void follow(String id, String followedUserId) {
         User user = userRepository.findById(id).orElseThrow();
         user.getFollowedUsers().add(followedUserId);
+        userRepository.findById(followedUserId).orElseThrow().getFollowers().add(id);
     }
 
     @SneakyThrows
