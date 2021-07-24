@@ -35,6 +35,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
     private HashSet<String> followedUsers;
+    private HashSet<String> followers;
 
 
     @JsonIgnore
