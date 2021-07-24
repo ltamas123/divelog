@@ -3,6 +3,9 @@ import { getTimeLine, getStats } from '../api/apiCalls';
 import SendDives from '../Components/SendDives';
 import useDecode from '../Hooks/useDecode';
 import DivesList from '../Components/DivesList';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Map from '../Components/Map';
 const TimeLine = () => {
   const [dives, setDives] = useState([]);
   const [stats, setStats] = useState();
@@ -21,28 +24,33 @@ const TimeLine = () => {
   }, []);
 
   return (
-    <div className="container ">
-      <div className="row justify-content-between ">
-        <div className="col">
-          <SendDives setDives={setDives} dives={dives} />
-        </div>
-        <div className="col">
-          {dives ? <DivesList dives={dives} /> : 'loading'}
-        </div>
-        {stats ? (
+    <>
+      <Popup trigger={<button className="button"> Open Modal </button>} modal>
+        <Map />
+      </Popup>
+      <div className="container ">
+        <div className="row justify-content-between ">
           <div className="col">
-            <div className="card text-white bg-secondary mb-3">
-              <div className="card-body">Stats</div>
-              <div className="card-body">Number of dives: {stats.count}</div>
-              <div className="card-body">Max depth: {stats.maxDepth}</div>
-              <div className="card-body">Longest Dive: {stats.maxTime}</div>
-            </div>
+            <SendDives setDives={setDives} dives={dives} />
           </div>
-        ) : (
-          'Loading'
-        )}
+          <div className="col">
+            {dives ? <DivesList dives={dives} /> : 'loading'}
+          </div>
+          {stats ? (
+            <div className="col">
+              <div className="card text-white bg-secondary mb-3">
+                <div className="card-body">Stats</div>
+                <div className="card-body">Number of dives: {stats.count}</div>
+                <div className="card-body">Max depth: {stats.maxDepth}</div>
+                <div className="card-body">Longest Dive: {stats.maxTime}</div>
+              </div>
+            </div>
+          ) : (
+            'Loading'
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
