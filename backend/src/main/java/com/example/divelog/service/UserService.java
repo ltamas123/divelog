@@ -53,7 +53,7 @@ public class UserService {
                 .build());
     }
 
-    public void follow(String id, String followedUserId) {
+    public User follow(String id, String followedUserId) {
         User user = userRepository.findById(id).orElseThrow();
         User followedUser = userRepository.findById(followedUserId).orElseThrow();
         if (user.getFollowedUsers().stream().noneMatch(userid -> userid.equalsIgnoreCase(followedUserId))) {
@@ -64,7 +64,7 @@ public class UserService {
             user.getFollowedUsers().remove(followedUserId);
             followedUser.getFollowers().remove(id);
         }
-
+        return followedUser;
     }
 
     @SneakyThrows

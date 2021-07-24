@@ -20,8 +20,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> findAll(){
-        
+    public List<User> findAll() {
+
         return userService.findAll();
     }
 
@@ -32,26 +32,26 @@ public class UserController {
 //    }
 
     @GetMapping("/{id}")
-    public Optional<User> findOne(@PathVariable String id){
+    public Optional<User> findOne(@PathVariable String id) {
         return userService.findOne(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void save(@RequestBody User user){
+    public void save(@RequestBody User user) {
         userService.save(user);
     }
 
     @PostMapping("/{id}")
-    public User update(@RequestBody User user, @PathVariable String id){
+    public User update(@RequestBody User user, @PathVariable String id) {
         return userService.update(user, id);
     }
 
 
     @PutMapping("/follow/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void follow(@PathVariable String id, @RequestParam(name = "id") String followedUserId){
-        userService.follow(id, followedUserId);
+    public User follow(@PathVariable String id, @RequestParam(name = "id") String followedUserId) {
+        return userService.follow(id, followedUserId);
     }
 
 }

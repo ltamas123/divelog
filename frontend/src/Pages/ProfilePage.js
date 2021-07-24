@@ -7,12 +7,16 @@ import useDecode from '../Hooks/useDecode';
 const ProfilePage = () => {
   const [user, setUser] = useState();
   const [dives, setDives] = useState();
+  const [isFollowed, setIsFollowed] = useState(false);
   const { getUserId } = useDecode();
   const location = useLocation();
   const userId = location.pathname.replace('/user/', '');
   const loggedInUserId = getUserId();
 
-  const follow = async () => {};
+  const onFollowClick = async () => {
+    setUser(await followUser(loggedInUserId, userId));
+    console.log(user);
+  };
 
   useEffect(() => {
     const getUserInformation = async () => {
@@ -37,13 +41,15 @@ const ProfilePage = () => {
           </div>
           <div> Name: {user.fullName}</div>
           <div>Email: {user.email}</div>
-          <button
-            type="button"
-            class="btn btn-success"
-            onClick={async () => await followUser(loggedInUserId, userId)}
-          >
-            {user.followers.includes(loggedInUserId) ? 'Unfollow' : 'Follow'}
-          </button>
+          {userId !== loggedInUserId && (
+            <button
+              type="button"
+              class="btn btn-success"
+              onClick={onFollowClick}
+            >
+              {user.followers.includes(loggedInUserId) ? 'Unfollow' : 'Follow'}
+            </button>
+          )}
         </div>
         <div class="col-8">
           {' '}
